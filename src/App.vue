@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <Users/>
+    <ModalWindow/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+
+import Users from './components/Users'
+import ModalWindow from './components/ModalWindow'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Users,
+    ModalWindow
   }
 }
 </script>
