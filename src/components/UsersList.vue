@@ -1,31 +1,27 @@
 <template>
   <div class="users">
     <div class="users__list">
-      <button class="users__item users__item-heading">Имя</button>
+      <button class="users__item users__item-heading" @click="sortName = true">Имя</button>
       <button class="users__item users__item-heading">Телефон</button>
     </div>
-    <div>
-      <div v-for="user in getUsersList" :key="user.id">
-        <div class="users__list">
-          <p :class="['users__item',{'users__item-addition' : user.children}]"> {{ user.name }}</p>
-          <p class="users__item"> {{ user.tel }} </p>
-        </div>
-        <div class="users__list" v-for="child in user.children" :key="child.id">
-          <p :class="['users__item', 'users__item-child',{'users__item-addition' : child.children}]"> {{ child.name }}</p>
-          <p class="users__item"> {{ child.tel }} </p>
-        </div>
-      </div>
-    </div>
-<!--    users__item-->
+    <RowOne :usersList="getUsersList"  :sortName="sortName"/>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-// import {v4 as uuidv4} from 'uuid';
+import RowOne from './rows/RowOne'
 
 export default {
   name: 'UsersList',
+  components: {
+    RowOne
+  },
+  data () {
+    return {
+      sortName: false
+    }
+  },
   computed: {
     ...mapGetters(['getUsersList'])
   }
@@ -34,14 +30,20 @@ export default {
 
 <style scoped>
 
-.users{
+.users {
   margin: 25px auto;
   width: 100%;
 }
+
+.users > .users__list {
+  padding: 0;
+}
+
 .users__list {
   display: flex;
   justify-content: space-between;
 }
+
 .users__item {
   margin: 0;
   width: 100%;
@@ -49,21 +51,10 @@ export default {
   padding: 7px 15px 7px 25px;
   text-align: left;
 }
-.users__item-heading{
+
+.users__item-heading {
   background: #ffffff;
   font-size: 16px;
-}
-.users__item-addition {
-  position: relative;
-}
-.users__item-addition:after {
-  content: '+';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 7px;
-}
-
-.users__item-child {
+  cursor: pointer;
 }
 </style>

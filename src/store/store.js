@@ -53,28 +53,34 @@ export default new Vuex.Store({
   },
   mutations: {
     setUsersList (state, payload) {
-      state.usersList = [...state.usersList, ...payload]
+      state.usersList = payload
+      localStorage.setItem('users', JSON.stringify(state.usersList))
+    },
+    setUsersListLocal (state) {
+      localStorage.setItem('users', JSON.stringify(state.usersList))
     },
     setNewUser (state, payload) {
       const {user, chief} = payload
       state.selectNamesList.push({id: user.id, name: user.name})
       const searchChief = (arr) => {
-        arr.forEach(el => {
+        arr.forEach((el) => {
           if (el.id === chief) {
             if (el.hasOwnProperty('children')) {
               el.children.push(user)
             } else {
-              el.children = [user]
+              Vue.set(el, 'children', [user])
             }
           } else if (el.hasOwnProperty('children')) {
-            searchChief(el.children)
+            return searchChief(el.children)
           }
         })
       }
       if (!chief) {
-        state.usersList.push(user)
-      } else searchChief(state.usersList)
-      localStorage.setItem('users', JSON.stringify(state.usersList));
+        return state.usersList.push(user)
+      } else {
+        searchChief(state.usersList)
+      }
+      localStorage.setItem('users', JSON.stringify(state.usersList))
     },
     setInitialSelectNames (state) {
       const getDataUsers = (arr) => {

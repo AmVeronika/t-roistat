@@ -20,7 +20,7 @@ export default {
   transition-duration: 0.4s;
 }
 .button:hover {
-  background-color: rgba(0, 0, 0, 0.79); /* Green */
+  background-color: rgba(0, 0, 0, 0.79);
   color: white;
   cursor: pointer;
 }
