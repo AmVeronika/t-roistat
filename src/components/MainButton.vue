@@ -12,7 +12,8 @@ export default {
 
 <style scoped>
 .button {
-  padding: 5px 15px;
+  width: fit-content;
+  padding: 5px 25px;
   background: #dddddd;
   border: 1px solid #9c9c9c;
   border-radius: 15px;

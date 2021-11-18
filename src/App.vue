@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <Users/>
-    <ModalWindow/>
+    <Users @open="toggleWindowModal"/>
+    <transition name="show">
+    <ModalWindow v-show="isShowModal" @close="toggleWindowModal"/>
+    </transition>
   </div>
 </template>
 
@@ -15,17 +17,23 @@ export default {
   components: {
     Users,
     ModalWindow
+  },
+  data: () => ({
+    isShowModal: false
+  }),
+  methods: {
+    toggleWindowModal (togle) {
+      this.isShowModal = togle
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.show-enter-active, .show-leave-active {
+  transition: opacity .5s;
+}
+.show-enter, .show-leave-to {
+  opacity: 0;
 }
 </style>

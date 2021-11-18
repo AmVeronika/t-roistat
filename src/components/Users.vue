@@ -1,6 +1,6 @@
 <template>
   <div class="users-wrapp">
-    <main-button class="users-wrapp__btn">Добавить</main-button>
+    <main-button class="users-wrapp__btn" @click.native="openModalWindow">Добавить</main-button>
     <UsersList/>
   </div>
 </template>
@@ -17,7 +17,10 @@ export default {
     UsersList
   },
   methods: {
-    ...mapActions(['fetchDataUsersList'])
+    ...mapActions(['fetchDataUsersList']),
+    openModalWindow () {
+      this.$emit('open', true)
+    }
   },
   mounted () {
     this.fetchDataUsersList()
@@ -27,11 +30,12 @@ export default {
 
 <style scoped>
 .users-wrapp {
-  margin: 0 auto;
+  margin: 20% auto;
   width: 400px;
   display: flex;
   flex-direction: column;
 }
+
 .users-wrapp__btn {
   align-self: end;
 }

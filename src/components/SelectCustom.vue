@@ -1,7 +1,7 @@
 <template>
   <div class="settings-select">
     <div class="settings-select__title" @click="toggleMenu">
-      {{ getSelected }}
+      <p>{{ getSelected }}</p>
       <p
         :class="[toggleSelect ? 'arrow' : '']">
         &#9660;
@@ -11,11 +11,11 @@
     <div v-if="toggleSelect" class="settings-select__form">
       <label
         class="settings-select__option"
-        v-for="user in getUsersList"
+        v-for="user in getSelectNamesList"
         :key="user.id"
-        @change="selectItem(user.name)"
+        @change="selectItem(user)"
       >
-        <input class="settings-select__input" type="radio"/>
+        <input class="settings-select__input" name="chief" type="radio"/>
         {{ user.name }}
       </label>
     </div>
@@ -30,22 +30,22 @@ export default {
   name: 'SelectCustom',
   data () {
     return {
-      getSelected: 'null',
+      getSelected: null,
       toggleSelect: false
     }
   },
   methods: {
-    // ...mapMutations(["changeSelected"]),
     toggleMenu () {
       this.toggleSelect = !this.toggleSelect
     },
     selectItem (user) {
-      this.getSelected = user
+      this.getSelected = user.name
       this.toggleSelect = false
+      this.$emit('chef', user.id)
     }
   },
   computed: {
-    ...mapGetters(['getUsersList'])
+    ...mapGetters(['getSelectNamesList'])
   }
 }
 </script>
@@ -56,7 +56,7 @@ export default {
 }
 
 .settings-select {
-  min-width: 150px;
+  min-width: 213px;
   max-width: max-content;
   position: relative;
 }
@@ -66,7 +66,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 5px;
+  padding: 3px 5px;
   border-radius: 4px;
   cursor: pointer;
   transition: 0.2s ease-out;
@@ -83,15 +83,20 @@ export default {
   -khtml-user-select: none;
   user-select: none;
   width: 100%;
+  height: 272px;
+  overflow-y: scroll;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.79);
   position: absolute;
   top: 33px;
   left: 0;
+  background: #ffffff;
 }
 
 .settings-select__option {
-  padding: 5px;
+  width: 100%;
+  text-align: left;
+  padding: 5px 0;
   cursor: pointer;
   transition: 0.2s ease-out;
 }
